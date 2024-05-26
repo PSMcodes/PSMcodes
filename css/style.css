@@ -118,6 +118,7 @@ h6,
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar-light .navbar-nav .nav-link.active {
     color: var(--secondary) !important;
+    text-decoration: underline;
 }
 
 .navbar-light .navbar-brand h1 {
@@ -218,7 +219,9 @@ h6,
         url(../img/blob-bottom-left.png),
         url(../img/blob-bottom-right.png),
         url(../img/blob-center.png),
-        url(../img/bg-bottom.png);
+        
+        url(../img/bg-bottom.png),
+        linear-gradient(315deg, #2234ae 0%, #191714 74%);
     background-position:
         left 0px top 0px,
         right 0px top 0px,
@@ -513,13 +516,13 @@ h6,
 .footer {
     margin-top: 6rem;
     padding-top: 9rem;
-    background:
-        url(../img/bg-top.png),
-        url(../img/map.png);
+    background:url(../img/bg-top.png),
+    linear-gradient(315deg, #2234ae 0%, #191714 74%);
     background-position:
         center top,
         center center;
     background-repeat: no-repeat;
+    background-color:var(--primary)!important ;
 }
 
 .footer .btn.btn-social {
@@ -576,7 +579,7 @@ h6,
 .footer .footer-menu a {
     margin-right: 15px;
     padding-right: 15px;
-    border-right: 1px solid rgba(255, 255, 255, .1);
+    border-right: 1px solid rgba(255, 255, 255, .1);    
 }
 
 .footer .footer-menu a:last-child {
@@ -592,8 +595,12 @@ h6,
 ::-webkit-scrollbar {
     appearance: none;
     background: white; 
+    width: 5px;
   }
   ::-webkit-scrollbar-thumb{
     background-color: #2234ae !important ;
   }
   
+  body > div.container-xxl.bg-white.p-0 > div.container-fluid.bg-primary.text-light.footer.wow.fadeIn > div.container.py-5.px-lg-5 > div > div:nth-child(1) > p{
+    font-size: 14px;
+  }
