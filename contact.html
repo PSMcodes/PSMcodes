@@ -256,6 +256,7 @@
                 body: JSON.stringify({name: name, email: email, subject: subject, message: message}),
                 headers: {
                     'Content-Type': 'application/json',
+			'access-control-allow-origin': '*' 
                 },
             })
             .then(response => response.json())
