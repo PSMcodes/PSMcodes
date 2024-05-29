@@ -107,37 +107,41 @@
                             <p class="text-center mb-4">
 
                                 "Ready to turn your digital vision into reality? Contact us for inquiries, quotes, or project discussions. Our team at PSMcodes is here to help. Reach out via our online form, email us at psmcodes.co@gmail.com, or give us a call at +91 9022428111. <br> Let's elevate your online presence together!"</p>
-                            <form id="submit-form">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-                                            <label for="name">Your Name</label>
+                                <form id="contact-form">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="name" placeholder="Your Name"
+                                                    required name="name">
+                                                <label for="name">Your Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="email" placeholder="Your Email"
+                                                    required name="mail">
+                                                <label for="email">Your Email</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control"  placeholder="Subject" id="contact"
+                                                    required name="contact">
+                                                <label for="contact">Contact</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <textarea class="form-control" placeholder="Leave a message here"
+                                                    id="message" style="height: 150px" required name="message"></textarea>
+                                                <label for="message">Message</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100 py-3" type="submit" id="submit-btn">Send Message</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
-                                            <label for="email">Your Email</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject" required>
-                                            <label for="subject">Subject</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" required></textarea>
-                                            <label for="message">Message</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
                         </div>
                     </div>
                 </div>
@@ -241,39 +245,44 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/isotope/isotope.pkgd.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        document.getElementById('submit-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-
-            fetch('https://script.google.com/macros/s/AKfycbyRaRceBR21M51BF9A-IZWQEMjqhnq1IM7a1S0YeWfSMAEL7WMGbJQKMUGHT1F2BPKhEw/exec', {
-                method: 'POST',
-                body: JSON.stringify({name: name, email: email, subject: subject, message: message}),
-                headers: {
-                    'Content-Type': 'application/json',
-			'access-control-allow-origin': '*' 
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === 'success') {
-                    alert('Form submitted successfully!');
-                    document.getElementById('submit-form').reset();
-                } else {
-                    alert('There was an error submitting the form. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error submitting the form. Please try again.');
+        (function () {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+                publicKey: "AvdxnTthcJ_pJALEn",
             });
+        })();
+        let form = document.getElementById('contact-form')
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            // these IDs from the previous steps
+            document.getElementById('submit-btn').setAttribute('disabled',true);
+            let message = `
+                ${form.message.value}
+                This is my mail ${form.mail.value} and my contact no ${form.contact.value}
+            ` 
+            emailjs.send("service_oddt5w2", "template_awr1rxr", {
+                from_name: form.name.value,
+                to_name: 'PSMcodes Team',
+                message: message,
+            }).then(() => {
+                console.log('SUCCESS!');
+                alert("Message Send SuccessFully")
+            }, (error) => {
+                console.error('FAILED...', error);
+                alert('FAILED...', error);
+            }).then(()=>{
+                form.name.value = ''
+                form.contact.value = ''
+                form.mail.value = ''
+                form.message.value = ''
+                
+            });
+            document.getElementById('submit-btn').removeAttribute('disabled');
         });
     </script>
 </body>
